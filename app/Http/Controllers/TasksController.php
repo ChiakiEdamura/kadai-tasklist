@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Requests;
+
+use App\Task;
+
 class TasksController extends Controller
 {
     /**
@@ -13,10 +17,9 @@ class TasksController extends Controller
      */
     public function index()
     {
-    $tasks = Task::all();
-
+        $tasks = Task::all();
         return view('tasks.index', [
-            'test' => $tasks,
+            'tasks' => $tasks,
         ]);
     }
 
@@ -42,7 +45,10 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-    $task = new Task;
+        $this->validate($request,[
+            'content'=>'required|max:10',
+            ]);
+        $task = new Task;
         $task->content = $request->content;
         $task->save();
 
@@ -72,8 +78,7 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-    $task = Task::find($id);
-
+        $task = Task::find($id);
         return view('tasks.edit', [
             'task' => $task,
         ]);
@@ -88,6 +93,9 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'content' => 'required|max:10'
+            ]);
         $task = Task::find($id);
         $task->content = $request->content;
         $task->save();
