@@ -10,7 +10,7 @@
     {!! Form::model($task, ['route' => 'tasks.store']) !!}
     
         <div class="form-group">
-                    {!! Form::label('title', 'タイトル:') !!}
+                    {!! Form::label('title', 'タスク:') !!}
                     {!! Form::text('title', null, ['class' => 'form-control']) !!}
                 </div>
                     
